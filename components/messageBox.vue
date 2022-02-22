@@ -4,17 +4,27 @@
       v-model="input"
       clearable
       :append-outer-icon="'mdi-send'"
+      @click:append-outer="send"
     ></v-text-field>
   </div>
 </template>
 
 <script lang="ts">
-export default {
+import Vue from 'vue'
+import { MessageStore } from '~/store'
+
+export default Vue.extend({
   name: 'messageBox',
   data() {
     return {
       input: 'test'
     }
+  },
+  methods: {
+    send: function() {
+      console.log('test')
+      MessageStore.sendMessage(this.input)
+    }
   }
-}
+})
 </script>
