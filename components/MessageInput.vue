@@ -14,7 +14,7 @@ import Vue from 'vue'
 import { MessageStore } from '~/store'
 
 export default Vue.extend({
-  name: 'messageBox',
+  name: 'MessageInput',
   data() {
     return {
       input: 'test'
