@@ -12,15 +12,14 @@ module.exports = {
 }
 
 const connection = mysql.createConnection({
-  host: 'db',
+  host: process.env.MYSQL_HOST,
   port: 3306,
-  database: 'chat',
-  user: 'chat',
-  password: 'uZ6pdcFT'
+  database: process.env.MYSQL_DATABASE,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
 })
 
 app.get('/test', (req: express.Request, res: express.Response) => {
-  console.log(process.env.MYSQL_HOST)
   connection.query('select * from test', (error: mysql.QueryError, items: any) => {
     if (error) {
       throw error
