@@ -40,11 +40,4 @@ export default class Messages extends VuexModule {
     const response = await $axios.$get('/api/test', { params: {id: 1} })
     console.log(response)
   }
-  // async loadGameData (context, payload) {
-  //   const response = await this.$axios.$get('/api/load', { params: { id: payload.id } })
-  //   context.commit('setGameId', { id: response.gameId })
-  //   context.commit('setHistory', { history: response.history })
-  //   context.commit('setStepNumber', { stepNumber: response.stepNumber })
-  //   context.commit('setXIsNext', { xIsNext: response.xIsNext })
-  // }
 }
