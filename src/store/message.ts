@@ -1,4 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+import { $axios } from '~/utils/api'
 
 type Message = {
   id: Number
@@ -33,4 +34,17 @@ export default class Messages extends VuexModule {
     }
     this.add(message)
   }
+
+  @Action({ rawError: true })
+  public async apiTest() {
+    const response = await $axios.$get('/api/test', { params: {id: 1} })
+    console.log(response)
+  }
+  // async loadGameData (context, payload) {
+  //   const response = await this.$axios.$get('/api/load', { params: { id: payload.id } })
+  //   context.commit('setGameId', { id: response.gameId })
+  //   context.commit('setHistory', { history: response.history })
+  //   context.commit('setStepNumber', { stepNumber: response.stepNumber })
+  //   context.commit('setXIsNext', { xIsNext: response.xIsNext })
+  // }
 }
