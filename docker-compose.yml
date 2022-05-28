@@ -1,5 +1,17 @@
 version: "3.9"
 services:
+  app:
+    build: ./node
+    ports:
+      - "3000:3000"
+    working_dir: "/src"
+    volumes:
+      -  "./src:/src"
+    tty: true
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+
   db:
     image: mysql:8.0.26
     container_name: chat_db
