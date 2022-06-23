@@ -1,5 +1,5 @@
 import express from "express"
-import mysql from "mysql2"
+import mysql from "mysql"
 
 const { body, validationResult } = require('express-validator/check')
 const app = express()
@@ -20,7 +20,7 @@ const connection = mysql.createConnection({
 })
 
 app.get('/test', (req: express.Request, res: express.Response) => {
-  connection.query('select * from test', (error: mysql.QueryError, items: any) => {
+  connection.query('select * from test', (error: any, items: any) => {
     if (error) {
       throw error
     }
