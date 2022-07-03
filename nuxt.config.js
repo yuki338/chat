@@ -24,9 +24,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/axios-accessor',
-  ],
+  plugins: ['~/plugins/axios-accessor'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -45,9 +43,7 @@ export default {
     '@nuxtjs/axios',
   ],
 
-  serverMiddleware: [
-    '~/api/index.ts'
-  ],
+  serverMiddleware: ['~/api/index.ts'],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

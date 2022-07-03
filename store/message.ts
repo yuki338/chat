@@ -30,14 +30,14 @@ export default class Messages extends VuexModule {
     const message: Message = {
       id: id,
       message: text,
-      date: new Date,
+      date: new Date(),
     }
     this.add(message)
   }
 
   @Action({ rawError: true })
   public async apiTest() {
-    const response = await $axios.$get('/api/test', { params: {id: 1} })
+    const response = await $axios.$get('/api/test', { params: { id: 1 } })
     console.log(response)
   }
 }

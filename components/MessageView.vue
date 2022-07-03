@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-text v-for="message in messages" :key="message.id">
-      {{message.message}}
+      {{ message.message }}
     </v-card-text>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default Vue.extend({
   computed: {
     messages: function () {
       return MessageStore.getMessages
-    } 
-  }
+    },
+  },
 })
 </script>

@@ -18,18 +18,18 @@ export default Vue.extend({
   name: 'MessageInput',
   data() {
     return {
-      input: 'test'
+      input: 'test',
     }
   },
   methods: {
-    send: function() {
+    send: function () {
       console.log('test')
       MessageStore.sendMessage(this.input)
     },
-    test: function() {
+    test: function () {
       console.log('start')
       MessageStore.apiTest()
-    }
-  }
+    },
+  },
 })
 </script>
