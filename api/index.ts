@@ -12,6 +12,15 @@ module.exports = {
   handler: app,
 }
 
+type MessageRecord = {
+  messageId: Number
+  roomId: String
+  message: String
+  userId: Number
+  dateTime: Date
+  deleteFlg: Number
+}
+
 const connection = mysql.createConnection({
   host: process.env.MYSQL_HOST,
   port: 3306,
@@ -51,27 +60,36 @@ app.get('/messages', (req: express.Request, res: express.Response) => {
 })
 
 app.post('/send', (req: express.Request, res: express.Response) => {
-  if (!req.params) {
-    res.send([])
-    console.log(req.query.roomId)
-  }
-  if (req.query.message == '') {
+  const message = req.body.message ?? ''
+  if (message == '') {
+    console.log(req.body.message)
     res.send(false)
+    return
   }
   const params = [
-    req.query.roomId ?? '',
-    req.query.message ?? '',
-    req.query.userId ?? 0,
+    req.body.roomId ?? '',
+    message,
+    req.body.userId ?? 0,
     format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
   ]
   connection.query(
     'insert into message (roomId, message, userId, dateTime) values (?, ?, ?, ?)',
     params,
-    (error, items) => {
+    (error, result: mysql.OkPacket) => {
       if (error) {
         throw error
       }
-      res.send(true)
+      connection.query(
+        'select * from message where messageId = ?',
+        [result.insertId],
+        (error, items: Array<MessageRecord>) => {
+          if (error) {
+            throw error
+          }
+          const item = items.shift()
+          res.send(item)
+        }
+      )
     }
   )
 })

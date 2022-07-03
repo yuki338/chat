@@ -6,7 +6,6 @@
       :append-outer-icon="'mdi-send'"
       @click:append-outer="send"
     ></v-text-field>
-    <v-btn block @click="test">click</v-btn>
   </div>
 </template>
 
@@ -23,12 +22,7 @@ export default Vue.extend({
   },
   methods: {
     send: function () {
-      console.log('test')
       MessageStore.sendMessage(this.input)
-    },
-    test: function () {
-      console.log('start')
-      MessageStore.apiTest()
     },
   },
 })

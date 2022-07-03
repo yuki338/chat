@@ -7,6 +7,15 @@ type Message = {
   date: Date
 }
 
+type MessageResponse = {
+  messageId: Number
+  roomId: String
+  message: String
+  userId: Number
+  dateTime: Date
+  deleteFlg: Number
+}
+
 @Module({
   name: 'message',
   stateFactory: true,
@@ -20,24 +29,32 @@ export default class Messages extends VuexModule {
   }
 
   @Mutation
-  private add(message: Message) {
+  private add(messageResponse: MessageResponse) {
+    const message: Message = {
+      id: messageResponse.messageId,
+      message: messageResponse.message,
+      date: new Date(messageResponse.dateTime),
+    }
     this.messages.push(message)
   }
 
   @Action({ rawError: true })
-  public sendMessage(text: String) {
-    const id: Number = this.messages.length + 1
-    const message: Message = {
-      id: id,
-      message: text,
-      date: new Date(),
-    }
-    this.add(message)
+  public async sendMessage(
+    message: String,
+    roomId: String = '',
+    userId: Number = 0
+  ) {
+    const messageResponse = await $axios.$post('/api/send', { message: message, roomId: roomId, userId: userId })
+    this.add(messageResponse)
   }
 
   @Action({ rawError: true })
-  public async apiTest() {
-    const response = await $axios.$get('/api/test', { params: { id: 1 } })
-    console.log(response)
+  public async fetchMessages() {
+    const response = await $axios.$get('/api/messages', {
+      params: { roomId: '' },
+    })
+    response.forEach((messageResponse: MessageResponse) => {
+      this.add(messageResponse)
+    })
   }
 }
