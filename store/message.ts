@@ -44,7 +44,11 @@ export default class Messages extends VuexModule {
     roomId: String = '',
     userId: Number = 0
   ) {
-    const messageResponse = await $axios.$post('/api/send', { message: message, roomId: roomId, userId: userId })
+    const messageResponse = await $axios.$post('/api/send', {
+      message: message,
+      roomId: roomId,
+      userId: userId,
+    })
     this.add(messageResponse)
   }
 
