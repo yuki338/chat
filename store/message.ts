@@ -1,20 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
-
-type Message = {
-  id: Number
-  message: String
-  date: Date
-}
-
-type MessageResponse = {
-  messageId: Number
-  roomId: String
-  message: String
-  userId: Number
-  dateTime: Date
-  deleteFlg: Number
-}
+import { MessageRecord } from '~/types/types'
 
 @Module({
   name: 'message',
@@ -22,18 +8,21 @@ type MessageResponse = {
   namespaced: true,
 })
 export default class Messages extends VuexModule {
-  private messages: Message[] = []
+  private messages: MessageRecord[] = []
 
   public get getMessages() {
     return this.messages
   }
 
   @Mutation
-  private add(messageResponse: MessageResponse) {
-    const message: Message = {
-      id: messageResponse.messageId,
+  private add(messageResponse: MessageRecord) {
+    const message: MessageRecord = {
+      messageId: messageResponse.messageId,
+      roomId: messageResponse.roomId,
       message: messageResponse.message,
-      date: new Date(messageResponse.dateTime),
+      userId: messageResponse.userId,
+      dateTime: messageResponse.dateTime,
+      deleteFlg: messageResponse.deleteFlg,
     }
     this.messages.push(message)
   }
@@ -57,7 +46,7 @@ export default class Messages extends VuexModule {
     const response = await $axios.$get('/api/messages', {
       params: { roomId: '' },
     })
-    response.forEach((messageResponse: MessageResponse) => {
+    response.forEach((messageResponse: MessageRecord) => {
       this.add(messageResponse)
     })
   }

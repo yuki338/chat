@@ -1,6 +1,7 @@
 import express from 'express'
 import mysql from 'mysql'
 import { format } from 'date-fns'
+import { MessageRecord } from '~/types/types'
 
 const { body, validationResult } = require('express-validator/check')
 const app = express()
@@ -10,15 +11,6 @@ app.use(express.json())
 module.exports = {
   path: '/api',
   handler: app,
-}
-
-type MessageRecord = {
-  messageId: Number
-  roomId: String
-  message: String
-  userId: Number
-  dateTime: Date
-  deleteFlg: Number
 }
 
 const connection = mysql.createConnection({
