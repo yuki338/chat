@@ -16,24 +16,6 @@ const connection = mysql.createConnection({
   password: process.env.MYSQL_PASSWORD,
 })
 
-app.get('/messages', (req: express.Request, res: express.Response) => {
-  if (!req.params) {
-    res.send([])
-    console.log(req.query.roomId)
-  }
-  const roomId = req.query.roomId ?? ''
-  connection.query(
-    'select * from message where roomId = ?',
-    [roomId],
-    (error, items) => {
-      if (error) {
-        throw error
-      }
-      res.send(items)
-    }
-  )
-})
-
 app.post('/send', (req: express.Request, res: express.Response) => {
   const message = req.body.message ?? ''
   if (message == '') {
