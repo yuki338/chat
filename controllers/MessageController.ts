@@ -12,5 +12,21 @@ module.exports = {
     Message.getMessages(roomId).then((messages: Array<MessageRecord>) => {
       res.send(messages)
     })
+  },
+
+  sendMessage: (req: express.Request, res: express.Response) => {
+    // メッセージ未設定はエラーを返す
+    const message = req.body.message ?? ''
+    if (message == '') {
+      console.log(req.body.message)
+      res.send(false)
+      return
+    }
+    const roomId = req.body.roomId ?? ''
+    const userId = req.body.userId ?? 0
+    Message.insertMessage(message, roomId, userId)
+      .then((message: MessageRecord) => {
+        res.send(message)
+      })
   }
 }
