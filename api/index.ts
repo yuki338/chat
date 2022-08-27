@@ -8,11 +8,6 @@ const app = express()
 
 app.use(express.json())
 
-module.exports = {
-  path: '/api',
-  handler: app,
-}
-
 const connection = mysql.createConnection({
   host: process.env.MYSQL_HOST,
   port: 3306,
@@ -85,3 +80,5 @@ app.post('/send', (req: express.Request, res: express.Response) => {
     }
   )
 })
+
+export default app
