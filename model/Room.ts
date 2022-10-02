@@ -13,6 +13,7 @@ module.exports = {
           resolve(items)
         }
       )
+      connection.end()
     })
   }
 }

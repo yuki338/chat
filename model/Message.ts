@@ -16,6 +16,7 @@ module.exports = {
           resolve(items)
         }
       )
+      connection.end()
     })
   },
 
@@ -48,6 +49,7 @@ module.exports = {
           )
         }
       )
+      connection.end()
     })
   }
 }
