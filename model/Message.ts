@@ -7,8 +7,8 @@ module.exports = {
   getMessages: (roomId: Number) => {
     return new Promise ((resolve, reject) => {
       connection.query(
-        'select * from message where roomId = ?',
-        [roomId],
+        'select * from message where roomId = ? and deleteFlg = ? order by dateTime, messageId',
+        [roomId, 0],
         (error: mysql.MysqlError|null, items: Array<MessageRecord>) => {
           if (error) {
             reject(error)
@@ -16,7 +16,6 @@ module.exports = {
           resolve(items)
         }
       )
-      connection.end()
     })
   },
 
@@ -49,7 +48,6 @@ module.exports = {
           )
         }
       )
-      connection.end()
     })
   }
 }

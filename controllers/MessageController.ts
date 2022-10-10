@@ -6,7 +6,6 @@ module.exports = {
   getMessages: (req: express.Request, res: express.Response) => {
     if (! req.params) {
       res.send([])
-      console.log(req.query.roomId)
     }
     const roomId = req.query.roomId ?? ''
     Message.getMessages(roomId).then((messages: Array<MessageRecord>) => {

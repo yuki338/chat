@@ -29,3 +29,8 @@ create table `user` (
 
 -- chatユーザーのパスワードを再設定すること
 -- alter user chat identified with mysql_native_password by '';
+
+-- create database test_chat;
+-- create user test identified by 'test'; -- create user test identified with mysql_native_password by 'test'; でもいいかも？
+-- grant all on test_chat.* to test;
+-- alter user test identified with mysql_native_password by 'test';
