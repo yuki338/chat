@@ -4,6 +4,7 @@ services:
     build: ./node
     ports:
       - '3000:3000'
+      - '3001:3001'
     working_dir: '/src'
     volumes:
       - './:/src'

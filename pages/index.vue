@@ -7,12 +7,22 @@
   </v-row>
 </template>
 
-<script lang="ts">
+<script>
 import MessageInput from '~/components/MessageInput.vue'
 import MessageView from '~/components/MessageView.vue'
 import { MessageStore } from '~/store'
+import { io } from 'socket.io-client'
 
 export default {
+  data() {
+    return {
+      socket: io('http://localhost:3000/io'),
+    }
+  },
+  mounted() {
+    this.socket.emit('chat message', 'test')
+    console.log(this.socket)
+  },
   async fetch() {
     await MessageStore.fetchMessages()
   },
