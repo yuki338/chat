@@ -1,6 +1,8 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
 import { MessageRecord } from '~/types/types'
+import { io } from 'socket.io-client'
+const socket = io('http://localhost:3000')
 
 @Module({
   name: 'message',
@@ -33,12 +35,11 @@ export default class Messages extends VuexModule {
     roomId: String = '',
     userId: Number = 0
   ) {
-    const messageResponse = await $axios.$post('/api/send', {
+    socket.emit('send-message', {
       message: message,
       roomId: roomId,
       userId: userId,
     })
-    this.add(messageResponse)
   }
 
   @Action({ rawError: true })

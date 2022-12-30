@@ -21,10 +21,8 @@ export default {
     }
   },
   mounted() {
-    this.socket.emit('send-message', 'test')
     this.socket.on('new-message', (message) => {
-      console.log(message)
-      this.messages.push(message)
+      MessageStore.add(message)
     })
   },
   async fetch() {
