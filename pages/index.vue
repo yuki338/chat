@@ -16,12 +16,16 @@ import { io } from 'socket.io-client'
 export default {
   data() {
     return {
-      socket: io('http://localhost:3000/io'),
+      socket: io('http://localhost:3000'),
+      messages: [],
     }
   },
   mounted() {
-    this.socket.emit('chat message', 'test')
-    console.log(this.socket)
+    this.socket.emit('send-message', 'test')
+    this.socket.on('new-message', (message) => {
+      console.log(message)
+      this.messages.push(message)
+    })
   },
   async fetch() {
     await MessageStore.fetchMessages()

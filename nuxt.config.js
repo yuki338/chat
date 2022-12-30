@@ -41,11 +41,11 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '~/modules/io.js'
   ],
 
   serverMiddleware: [
-    {path: '/api', handler: '~/serverMiddleware/routes.ts'},
-    {path: '/io', handler: '~/serverMiddleware/io.js'}
+    {path: '/api', handler: '~/serverMiddleware/routes.ts'}
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
