@@ -40,6 +40,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    '@nuxtjs/auth',
     '@nuxtjs/axios',
     '~/modules/io.js'
   ],
@@ -71,6 +72,35 @@ export default {
         },
       },
     },
+  },
+
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/callback',
+      home: '/'
+    },
+    strategies: {
+      google: {
+        _scheme: 'oauth2',
+        authorization_endpoint: 'https://accounts.google.com/o/oauth2/auth',
+        userinfo_endpoint: 'https://www.googleapis.com/oauth2/v3/userinfo',
+        scope: [
+          'email',
+          'profile',
+          'openid',
+          'https://www.googleapis.com/auth/drive.metadata.readonly'
+        ],
+        access_type: undefined,
+        access_token_endpoint: undefined,
+        response_type: 'token',
+        token_type: 'Bearer',
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        token_key: 'access_token'
+      }
+    },
+    vuex: false
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
