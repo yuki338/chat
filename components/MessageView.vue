@@ -1,8 +1,20 @@
 <template>
   <div>
-    <v-card-text v-for="message in messages" :key="message.id">
-      {{ message.message }}
-    </v-card-text>
+    <v-card v-for="message in messages" :key="message.messageId">
+      <v-list-item>
+        <v-list-item-avatar>
+          <v-img :src="message.picture"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-subtitle class="text-subtitle-2">
+            {{ message.name }}
+          </v-list-item-subtitle>
+          <v-list-item-subtitle class="text-body-1">
+            {{ message.message }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
   </div>
 </template>
 

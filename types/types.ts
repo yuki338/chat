@@ -7,6 +7,17 @@ export interface MessageRecord {
   deleteFlg: Number
 }
 
+export interface MessageView {
+  messageId: Number
+  roomId: String
+  message: String
+  userId: Number
+  picture: String
+  name: String
+  dateTime: Date
+  deleteFlg: Number
+}
+
 export interface UserRecord {
   userId: Number
   name: String

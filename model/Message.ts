@@ -1,15 +1,15 @@
 import mysql from 'mysql'
 import { format } from 'date-fns'
-import { MessageRecord } from '~/types/types'
+import { MessageRecord, MessageView } from '~/types/types'
 const connection: mysql.Connection = require('../model/DbConnection')
 
 module.exports = {
   getMessages: (roomId: Number) => {
     return new Promise ((resolve, reject) => {
       connection.query(
-        'select * from message where roomId = ? and deleteFlg = ? order by dateTime, messageId',
+        'select message.*, user.picture, user.name from message left join user on message.userId = user.userId where message.roomId = ? and message.deleteFlg = ? order by message.dateTime, message.messageId;',
         [roomId, 0],
-        (error: mysql.MysqlError|null, items: Array<MessageRecord>) => {
+        (error: mysql.MysqlError|null, items: Array<MessageView>) => {
           if (error) {
             reject(error)
           }

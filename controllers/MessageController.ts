@@ -1,5 +1,5 @@
 import express from "express"
-import { MessageRecord } from "~/types/types"
+import { MessageRecord, MessageView } from "~/types/types"
 const Message = require('../model/Message')
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
       res.send([])
     }
     const roomId = req.query.roomId ?? ''
-    Message.getMessages(roomId).then((messages: Array<MessageRecord>) => {
+    Message.getMessages(roomId).then((messages: Array<MessageView>) => {
       res.send(messages)
     })
   },

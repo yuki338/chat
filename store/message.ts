@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
-import { MessageRecord } from '~/types/types'
+import { MessageView } from '~/types/types'
 import { io } from 'socket.io-client'
 const socket = io('http://localhost:3000')
 
@@ -10,19 +10,21 @@ const socket = io('http://localhost:3000')
   namespaced: true,
 })
 export default class Messages extends VuexModule {
-  private messages: MessageRecord[] = []
+  private messages: MessageView[] = []
 
   public get getMessages() {
     return this.messages
   }
 
   @Mutation
-  private add(messageResponse: MessageRecord) {
-    const message: MessageRecord = {
+  private add(messageResponse: MessageView) {
+    const message: MessageView = {
       messageId: messageResponse.messageId,
       roomId: messageResponse.roomId,
       message: messageResponse.message,
       userId: messageResponse.userId,
+      picture: messageResponse.picture,
+      name: messageResponse.name,
       dateTime: messageResponse.dateTime,
       deleteFlg: messageResponse.deleteFlg,
     }
@@ -47,7 +49,7 @@ export default class Messages extends VuexModule {
     const response = await $axios.$get('/api/messages', {
       params: { roomId: '' },
     })
-    response.forEach((messageResponse: MessageRecord) => {
+    response.forEach((messageResponse: MessageView) => {
       this.add(messageResponse)
     })
   }
