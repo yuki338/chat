@@ -24,6 +24,24 @@ export default {
     this.socket.on('new-message', (message) => {
       MessageStore.add(message)
     })
+
+    // ログイン中のみ実行
+    if (this.$auth.loggedIn) {
+      const params = {
+        authId: this.$auth.user.sub,
+        name: this.$auth.user.name,
+        picture: this.$auth.user.picture
+      }
+      const { data } = this.$axios.post(
+        '/api/auth',
+        params
+      )
+        .catch(err => {
+          console.log('error: ')
+          console.log(err.response)
+          return err.response
+        })
+    }
   },
   async fetch() {
     await MessageStore.fetchMessages()

@@ -12,22 +12,30 @@
         <!-- Todo: ログイン/ログアウトの分岐までしてくれるコンポーネントにしたい -->
         <v-list-item>
           <v-list-item-avatar>
-            <v-img src="https://lh3.googleusercontent.com/a/AGNmyxaBMQwDYzLJmhcBPTTplU-CQKuc4f_AvDdIXNDU=s96-c"></v-img>
+            <v-img :src="picture"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="text-h6">
-              Sandra Adams
+              {{ name }}
             </v-list-item-title>
-            <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <!-- ログインボタン(Google用) -->
-        <v-list-item @click="$auth.loginWith('google')">
+        <v-list-item v-if="! $auth.loggedIn" @click="$auth.loginWith('google')">
           <v-list-item-icon>
             <v-img src="/btn_google_dark_pressed_ios.svg"></v-img>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-action>Sign in with Google</v-list-item-action>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="$auth.loggedIn" @click="logout()">
+          <v-list-item-icon>
+            <v-img src="/btn_google_dark_pressed_ios.svg"></v-img>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-action>Sign out with Google</v-list-item-action>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -45,7 +53,7 @@
       <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
     </v-app-bar>
     <v-main>
@@ -67,28 +75,34 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Googleアカウントでログイン',
-          to: '/login',
-        },
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js',
     }
+  },
+  computed: {
+    picture() {
+      return this.$auth.loggedIn
+        ? this.$auth.user.picture
+        : '';
+    },
+    name() {
+      return this.$auth.loggedIn
+        ? this.$auth.user.name
+        : 'guest user';
+    },
+    email() {
+      return this.$auth.loggedIn
+        ? this.$auth.user.email
+        : '';
+    },
+  },
+  methods: {
+    logout: function () {
+      this.$auth.logout()
+      this.$router.go({path: this.$router.currentRoute.path, force: true})
+    },
   },
 }
 </script>

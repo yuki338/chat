@@ -6,3 +6,11 @@ export interface MessageRecord {
   dateTime: Date
   deleteFlg: Number
 }
+
+export interface UserRecord {
+  userId: Number
+  name: String
+  authId: String
+  picture: String
+  deleteFlg: Number
+}
