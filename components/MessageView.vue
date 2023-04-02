@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-for="message in messages" :key="message.messageId">
+    <v-card v-for="message in messages" :key="message.messageId" outlined>
       <v-list-item>
         <v-list-item-avatar>
           <v-img :src="message.picture"></v-img>
