@@ -7,7 +7,7 @@ module.exports = {
    * 認証先IDで取得
    * @returns UserRecord
    */
-  getUserByAuthId: (authId: Number) => {
+  getUserByAuthId: (authId: String) => {
     return new Promise ((resolve, reject) => {
       connection.query(
         'select * from user where authId = ? and deleteFlg = ? order by userId desc limit 1',

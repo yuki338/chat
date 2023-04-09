@@ -23,7 +23,7 @@ module.exports = {
     }
     const roomId = req.body.roomId ?? ''
     const userId = req.body.userId ?? 0
-    Message.insertMessage(message, roomId, userId)
+    Message.insertMessage(message, userId, roomId)
       .then((message: MessageRecord) => {
         res.send(message)
       })

@@ -15,14 +15,24 @@ import { MessageStore } from '~/store'
 
 export default Vue.extend({
   name: 'MessageInput',
+  props: {
+    authId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      input: 'test',
+      input: '',
     }
   },
   methods: {
-    send: function () {
-      MessageStore.sendMessage(this.input)
+    send: async function () {
+      await MessageStore.sendMessage({
+        message: this.input,
+        authId: this.authId,
+        roomId: ''
+      })
     },
   },
 })

@@ -2,7 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <message-view></message-view>
-      <message-input></message-input>
+      <message-input v-if="this.$auth.loggedIn" :authId="$auth.user.sub"></message-input>
     </v-col>
   </v-row>
 </template>

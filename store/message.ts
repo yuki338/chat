@@ -33,14 +33,16 @@ export default class Messages extends VuexModule {
 
   @Action({ rawError: true })
   public async sendMessage(
-    message: String,
-    roomId: String = '',
-    userId: Number = 0
+    payload: {
+      message: String,
+      authId: String,
+      roomId: String
+    }
   ) {
-    socket.emit('send-message', {
-      message: message,
-      roomId: roomId,
-      userId: userId,
+    await socket.emit('send-message', {
+      message: payload.message,
+      authId: payload.authId,
+      roomId: payload.roomId
     })
   }
 

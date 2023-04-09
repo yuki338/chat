@@ -19,7 +19,7 @@ module.exports = {
     })
   },
 
-  insertMessage: (message: string, roomId: Number, userId: Number) => {
+  insertMessage: (message: string, userId: Number, roomId: Number) => {
     const now = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
     const params = [
       roomId,
@@ -36,9 +36,9 @@ module.exports = {
             reject(error)
           }
           connection.query(
-            'select * from message where messageId = ?',
+            'select message.*, user.picture, user.name from message left join user on message.userId = user.userId where message.messageId = ?',
             [result.insertId],
-            (error, items: Array<MessageRecord>) => {
+            (error, items: Array<MessageView>) => {
               if (error) {
                 reject(error)
               }

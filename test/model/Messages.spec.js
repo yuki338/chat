@@ -123,7 +123,7 @@ describe('Messages Test', () => {
    *   追加したレコードが返ってきていること
    */
   test('insertMessage', async () => {
-    const message = await Message.insertMessage('insert message', 3, 10)
+    const message = await Message.insertMessage('insert message', 10, 3)
     expect(message['message']).toBe('insert message')
     expect(message['roomId']).toBe('3')
     expect(message['userId']).toBe(10)
