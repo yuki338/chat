@@ -1,8 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
 import { MessageView } from '~/types/types'
-import { io } from 'socket.io-client'
-const socket = io('http://chat-local.com')
+import { Socket } from 'socket.io-client'
 
 @Module({
   name: 'message',
@@ -34,12 +33,13 @@ export default class Messages extends VuexModule {
   @Action({ rawError: true })
   public async sendMessage(
     payload: {
+      socket: Socket,
       message: String,
       authId: String,
       roomId: String
     }
   ) {
-    await socket.emit('send-message', {
+    await payload.socket.emit('send-message', {
       message: payload.message,
       authId: payload.authId,
       roomId: payload.roomId

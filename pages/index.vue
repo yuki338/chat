@@ -16,7 +16,7 @@ import { io } from 'socket.io-client'
 export default {
   data() {
     return {
-      socket: io('http://chat-local.com'),
+      socket: io(this.$config.baseURL),
       messages: [],
     }
   },

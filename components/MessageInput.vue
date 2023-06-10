@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+import { io } from 'socket.io-client'
 import Vue from 'vue'
 import { MessageStore } from '~/store'
 
@@ -24,11 +25,13 @@ export default Vue.extend({
   data() {
     return {
       input: '',
+      socket: io(this.$config.baseURL)
     }
   },
   methods: {
     send: async function () {
       await MessageStore.sendMessage({
+        socket: this.socket,
         message: this.input,
         authId: this.authId,
         roomId: ''
