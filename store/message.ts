@@ -2,7 +2,7 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { $axios } from '~/utils/api'
 import { MessageView } from '~/types/types'
 import { io } from 'socket.io-client'
-const socket = io('http://chat-local.com:3000')
+const socket = io('http://chat-local.com')
 
 @Module({
   name: 'message',
