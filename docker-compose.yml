@@ -14,8 +14,6 @@ services:
     environment:
       - HOST=0.0.0.0
       - CHOKIDAR_USEPOLLING=true
-    networks:
-      - backend
     depends_on:
       - db
 
@@ -33,11 +31,6 @@ services:
     volumes:
       - db-data:/var/lib/mysql
       - ./db:/var/src
-    networks:
-      - backend
 
 volumes:
   db-data:
-
-networks:
-  backend:
