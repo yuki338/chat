@@ -10,6 +10,7 @@ import { Socket } from 'socket.io-client'
 })
 export default class Messages extends VuexModule {
   private messages: MessageView[] = []
+  private browseRoomId: number = 1
 
   public get getMessages() {
     return this.messages
@@ -36,7 +37,7 @@ export default class Messages extends VuexModule {
       socket: Socket,
       message: String,
       authId: String,
-      roomId: String
+      roomId: number
     }
   ) {
     await payload.socket.emit('send-message', {
@@ -49,7 +50,7 @@ export default class Messages extends VuexModule {
   @Action({ rawError: true })
   public async fetchMessages() {
     const response = await $axios.$get('/api/messages', {
-      params: { roomId: '' },
+      params: { roomId: this.browseRoomId },
     })
     response.forEach((messageResponse: MessageView) => {
       this.add(messageResponse)

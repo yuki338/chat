@@ -4,14 +4,15 @@
 -- drop table if exists user;
 
 create table `room` (
-  `roomId` varchar(16) not null,
+  `roomId` int not null auto_increment,
+  `name` varchar(128) not null,
   `deleteFlg` tinyint default 0 not null,
   primary key (`roomId`)
 );
 
 create table `message` (
   `messageId` int not null auto_increment,
-  `roomId` varchar(16) default '',
+  `roomId` int default 0,
   `message` text not null,
   `userId` int default 0 not null,
   `dateTime` datetime not null,
@@ -23,6 +24,8 @@ create table `message` (
 create table `user` (
   `userId` int not null auto_increment,
   `name` varchar(32) default '' not null,
+  `authId` text not null,
+  `picture` text not null,
   `deleteFlg` tinyint default 0 not null,
   primary key (`userId`)
 );

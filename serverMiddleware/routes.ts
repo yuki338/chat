@@ -9,7 +9,6 @@ app.use(express.json())
 
 app.get('/rooms', RoomController.getRooms)
 app.get('/messages', MessageController.getMessages)
-app.post('/send', MessageController.sendMessage)
 app.post('/auth', AuthController.auth)
 
 export default app

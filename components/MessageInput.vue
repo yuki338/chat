@@ -34,7 +34,7 @@ export default Vue.extend({
         socket: this.socket,
         message: this.input,
         authId: this.authId,
-        roomId: ''
+        roomId: 0
       })
     },
   },
