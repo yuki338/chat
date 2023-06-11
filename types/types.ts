@@ -25,3 +25,9 @@ export interface UserRecord {
   picture: String
   deleteFlg: Number
 }
+
+export interface RoomRecord {
+  roomId: number,
+  name: string,
+  deleteFlg: number
+}

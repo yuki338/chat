@@ -10,7 +10,7 @@
 <script>
 import MessageInput from '~/components/MessageInput.vue'
 import MessageView from '~/components/MessageView.vue'
-import { MessageStore } from '~/store'
+import { RoomStore, MessageStore } from '~/store'
 import { io } from 'socket.io-client'
 
 export default {
@@ -44,7 +44,10 @@ export default {
     }
   },
   async fetch() {
-    await MessageStore.fetchMessages()
+    // ルーム一覧読み込み
+    await RoomStore.fetchRooms()
+    // メッセージ読み込み
+    await MessageStore.fetchMessages({browseRoomId: 0})
   },
   components: { MessageInput, MessageView },
   name: 'IndexPage',

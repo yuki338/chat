@@ -4,7 +4,6 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      fixed
       app
     >
       <v-list>
@@ -30,6 +29,7 @@
             <v-list-item-action>Sign in with Google</v-list-item-action>
           </v-list-item-content>
         </v-list-item>
+        <!-- ログアウトボタン(Google用) -->
         <v-list-item v-if="$auth.loggedIn" @click="logout()">
           <v-list-item-icon>
             <v-img src="/btn_google_dark_pressed_ios.svg"></v-img>
@@ -40,7 +40,18 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+
+    <v-navigation-drawer
+      v-model="rightDrawer"
+      :mini-variant="rightMiniVariant"
+      :clipped="clipped"
+      app
+      right
+    >
+      <room-list></room-list>
+    </v-navigation-drawer>
+
+    <v-app-bar :clipped-left="clipped" app>
       <v-btn icon @click.stop="drawer = !drawer">
         <v-icon>mdi-account-circle</v-icon>
       </v-btn>
@@ -50,34 +61,36 @@
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+        <v-icon>mdi-list-box-outline</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
+    <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import RoomList from '~/components/RoomList.vue'
 export default {
+  components: { RoomList },
   name: 'DefaultLayout',
   data() {
     return {
       clipped: false,
       drawer: true,
-      fixed: false,
       miniVariant: false,
+      rightMiniVariant: false,
       right: true,
-      rightDrawer: false,
+      rightDrawer: true,
       title: 'Vuetify.js',
     }
   },

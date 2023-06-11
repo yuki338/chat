@@ -13,8 +13,9 @@ module.exports = {
         'select * from user where authId = ? and deleteFlg = ? order by userId desc limit 1',
         [authId, 0],
         (error: mysql.MysqlError|null, items: Array<UserRecord>) => {
-          if (error) {
+          if (error || items.length === 0) {
             reject(error)
+            return
           }
           resolve(items[0])
         }

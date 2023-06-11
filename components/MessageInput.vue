@@ -28,13 +28,20 @@ export default Vue.extend({
       socket: io(this.$config.baseURL)
     }
   },
+  computed: {
+    browseRoomId: function () {
+      return MessageStore.getBrouseRoomId
+    }
+  },
   methods: {
     send: async function () {
+      // 部屋未選択は送信しない
+      if (this.browseRoomId == 0) return
       await MessageStore.sendMessage({
         socket: this.socket,
         message: this.input,
         authId: this.authId,
-        roomId: 0
+        roomId: this.browseRoomId
       })
     },
   },

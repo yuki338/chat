@@ -9,8 +9,10 @@ import { Socket } from 'socket.io-client'
   namespaced: true,
 })
 export default class Messages extends VuexModule {
+  /**
+   * messages
+   */
   private messages: MessageView[] = []
-  private browseRoomId: number = 1
 
   public get getMessages() {
     return this.messages
@@ -31,6 +33,11 @@ export default class Messages extends VuexModule {
     this.messages.push(message)
   }
 
+  @Mutation
+  private messagesClear() {
+    this.messages = []
+  }
+
   @Action({ rawError: true })
   public async sendMessage(
     payload: {
@@ -48,12 +55,28 @@ export default class Messages extends VuexModule {
   }
 
   @Action({ rawError: true })
-  public async fetchMessages() {
+  public async fetchMessages(payload: {browseRoomId: number}) {
     const response = await $axios.$get('/api/messages', {
-      params: { roomId: this.browseRoomId },
+      params: { roomId: payload.browseRoomId },
     })
+    this.messagesClear()
     response.forEach((messageResponse: MessageView) => {
       this.add(messageResponse)
     })
+    this.setBrowseRoomId(payload.browseRoomId)
+  }
+
+  /**
+   * browseRoomId
+   */
+  private browseRoomId: number = 0
+
+  public get getBrouseRoomId() {
+    return this.browseRoomId
+  }
+
+  @Mutation
+  private setBrowseRoomId(roomId: number) {
+    this.browseRoomId = roomId
   }
 }
